@@ -1,13 +1,20 @@
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+
 public class PlayerMovement : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-    private float _speed = 3.0f;
 
-    private void Start()
+    private float _speed;
+    private int _hashRunAnimator;
+
+    private void Awake()
     {
+        _speed = 3.0f;
+        _hashRunAnimator = Animator.StringToHash("isRun");
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
@@ -16,11 +23,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            _animator.SetBool("isRun", true);
+            _animator.SetBool(_hashRunAnimator, true);
         }
         else
         {
-            _animator.SetBool("isRun", false);
+            _animator.SetBool(_hashRunAnimator, false);
         }
 
         if (Input.GetKey(KeyCode.A))
