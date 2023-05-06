@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnterTheDoor : MonoBehaviour
+public class Door : MonoBehaviour
 {
     [SerializeField] private Alarm _alarm;
 

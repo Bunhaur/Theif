@@ -11,6 +11,7 @@ public class Alarm : MonoBehaviour
     private float _minVolume;
     private float _maxVolume;
 
+
     private void Start()
     {
         _speedVolumeChange = 0.25f;
