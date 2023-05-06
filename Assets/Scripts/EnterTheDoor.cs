@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class EnterTheDoor : MonoBehaviour
 {
-    [SerializeField] private AlramSystem _alramSystem;
+    [SerializeField] private Alarm _alarm;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out Player player))
-            _alramSystem.OnEntering();
+            _alarm.OnEntering();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _alramSystem.OnExit();
+        if (collision.TryGetComponent<Player>(out Player player))
+            _alarm.OnExit();
     }
 }

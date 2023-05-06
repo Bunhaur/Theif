@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4fd4ca0528ede4c97474d6bd632689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alramSystem: {fileID: 127660889}
+  _alarm: {fileID: 127660889}
 --- !u!1 &127660884
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 127660886}
   - component: {fileID: 127660889}
   m_Layer: 0
-  m_Name: AlarmSystem
+  m_Name: Alarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
