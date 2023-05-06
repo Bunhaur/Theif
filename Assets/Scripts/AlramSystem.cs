@@ -1,63 +1,53 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AlramSystem : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
 
-    private float _volumeChangeSpeed = 0.2f;
+    private float _minVolume = 0f;
     private float _maxVolume = 1.0f;
-    private float _minVolume = 0.0f;
+    private float _changedVolumeSpeed;
 
-    private IEnumerator _increateVolumeJob;
-    private IEnumerator _decreateVolumeJob;
+    private Coroutine _volumeCoroutine;
 
-    public void Activate()
+    public void OnEntering()
     {
-        _audioSource.Play();
-
         if (_audioSource.volume == _maxVolume)
             _audioSource.volume = _minVolume;
 
-        //StopCoroutine(_decreateVolumeJob);
-        //StartCoroutine(_increateVolumeJob);
+        if (_audioSource.isPlaying == false)
+            _audioSource.Play();
 
-        StopCoroutine("DecreaseVolume");
-        StartCoroutine("IncreaseVolume");
+        if (_volumeCoroutine != null)
+            StopCoroutine( _volumeCoroutine );
+
+        _volumeCoroutine = StartCoroutine(ChangingVolume(_maxVolume));
     }
 
-    public void Deactivate()
+    public void OnExit()
     {
-        //StopCoroutine(_decreateVolumeJob);
-        //StartCoroutine(_increateVolumeJob);
+        StopCoroutine(_volumeCoroutine);
 
-        StopCoroutine("IncreaseVolume");
-        StartCoroutine("DecreaseVolume");
+        _volumeCoroutine = StartCoroutine(ChangingVolume(_minVolume));
     }
 
     private void Start()
     {
-        _increateVolumeJob = IncreaseVolume();
-        _decreateVolumeJob = DecreaseVolume();
+        _changedVolumeSpeed = 0.25f;
     }
 
-    private IEnumerator IncreaseVolume()
+    private IEnumerator ChangingVolume(float target)
     {
-        while (_audioSource.volume != _maxVolume)
+        while (_audioSource.volume != target)
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _maxVolume, _volumeChangeSpeed * Time.deltaTime);
-            yield return null;
-        }
-    }
-
-    private IEnumerator DecreaseVolume()
-    {
-        while (_audioSource.volume != _minVolume)
-        {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _minVolume, _volumeChangeSpeed * Time.deltaTime);
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, target, _changedVolumeSpeed * Time.deltaTime);
             yield return null;
         }
 
-        _audioSource.Stop();
+        if (_audioSource.volume == _minVolume)
+            _audioSource.Stop();
     }
 }
