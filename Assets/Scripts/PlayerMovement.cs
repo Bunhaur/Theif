@@ -7,12 +7,11 @@ public class PlayerMovement : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-    private float _speed;
+    private float _speed = 3f;
     private int _hashRunAnimator;
 
     private void Awake()
     {
-        _speed = 3.0f;
         _hashRunAnimator = Animator.StringToHash("isRun");
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
