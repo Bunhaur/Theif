@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-
     private float _speed;
     private int _hashRunAnimator;
 
